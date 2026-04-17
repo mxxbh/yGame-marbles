@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>玻璃瓶玻璃珠游戏</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <div class="score-container">
+                <div class="score-title">我的得分</div>
+                <div class="score-value" id="score">0</div>
+            </div>
+            <div class="next-container">
+                <div class="next-title">下一个</div>
+                <canvas id="nextCanvas" width="60" height="60"></canvas>
+            </div>
+        </div>
+
+        <div class="glass-container">
+            <canvas id="gameCanvas"></canvas>
+            <div class="spout">
+                <div class="spout-arms">
+                    <div class="spout-arm left"></div>
+                    <div class="spout-arm right"></div>
+                    <div class="spout-claw left"></div>
+                    <div class="spout-claw right"></div>
+                </div>
+                <canvas id="currentCanvas" width="60" height="60"></canvas>
+            </div>
+        </div>
+
+        <div class="instructions">
+            点击玻璃瓶投放玻璃珠 | 相同类型的玻璃珠接触会合并
+        </div>
+
+        <div class="game-over-overlay" id="gameOverOverlay" style="display: none;">
+            <div class="game-over-text">游戏结束</div>
+            <div class="final-score">最终得分: <span id="finalScore">0</span></div>
+            <button class="restart-btn" id="restartBtn">重新开始</button>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
