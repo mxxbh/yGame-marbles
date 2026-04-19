@@ -1,7 +1,7 @@
 {
   "name": "marble-game",
   "version": "1.0.0",
-  "description": "玻璃瓶玻璃珠合并游戏",
+  "description": "合成玻璃珠游戏",
   "main": "src/main.js",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "matter-js": "^0.19.0"
+    "matter-js": "^0.20.0"
   },
   "devDependencies": {
     "vite": "^5.2.0"
