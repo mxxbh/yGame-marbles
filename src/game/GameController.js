@@ -8,20 +8,24 @@ const matterDefaultConfig = {
   },
   marble: MARBLE_CIRCLE_CONFIG,
   staticMarble: {
-    isStatic: true,
     ...MARBLE_CIRCLE_CONFIG,
+    isStatic: true,
   },
 };
 
 const GAME_SCORE_EVENT = "GAME_SCORE_EVENT";
 
 export class GameController {
+  _gameArea = null;
   _engine = null;
   _world = null;
   _sceneWidth = 0;
   _sceneHeight = 0;
   _currentMarble = null;
   _currentScore = 0;
+  _marblePositionX = 0;
+  _marblePositionY = 40;
+  _marbleLevel = 0;
 
   constructor() {}
 
@@ -40,6 +44,7 @@ export class GameController {
     Render.run(render);
     Runner.run(Runner.create(), engine);
 
+    this._gameArea = gameArea;
     this._engine = engine;
     this._world = engine.world;
     this._sceneWidth = width;
@@ -77,11 +82,31 @@ export class GameController {
       label: `marble_${level}`,
       render: { fillStyle: color },
     });
+    World.add(this._world, marble);
     return marble;
   }
 
   _createStaticMarble(x, y, level, size) {
     return this._createMarble(x, y, level, size, true);
+  }
+
+  _calcPositionX(movementX) {
+    const { circleRadius } = this._currentMarble;
+    const [min, max] = [circleRadius, this._sceneWidth - circleRadius];
+    let posX = this._marblePositionX + movementX;
+    posX = Math.max(Math.min(posX, max), min);
+    this._marblePositionX = posX;
+  }
+
+  _updateMarblePosition(movementX) {
+    if (!this._currentMarble) {
+      return;
+    }
+    this._calcPositionX(movementX);
+    Body.setPosition(this._currentMarble, {
+      x: this._marblePositionX,
+      y: this._marblePositionY,
+    });
   }
 
   /**
@@ -125,7 +150,6 @@ export class GameController {
             const x = (a.position.x + b.position.x) / 2;
             const y = (a.position.y + b.position.y) / 2;
             const newMarble = this._createMarble(x, y, newLevel, 1);
-            World.add(this._world, newMarble);
 
             let g = 0.01;
             const grow = setInterval(() => {
@@ -143,6 +167,53 @@ export class GameController {
     });
   }
 
+  _fallMarble() {
+    if (!this._currentMarble) {
+      return;
+    }
+    // 移除静止的弹珠，在相同位置重新创建支持下落的弹珠
+    World.remove(this._world, this._currentMarble);
+    this._currentMarble = null;
+    this._createMarble(this._marblePositionX, this._marblePositionY, this._marbleLevel);
+  }
+
+  _bindTouch() {
+    let masterPointerId = NaN;
+    this._gameArea.addEventListener("pointerdown", (e) => {
+      const { pointerId = 1 } = e ?? {};
+      masterPointerId = pointerId;
+    });
+
+    this._gameArea.addEventListener("pointermove", (e) => {
+      const { movementX = 0, pointerId = 1 } = e ?? {};
+      if (!this._currentMarble || masterPointerId !== pointerId) {
+        return;
+      }
+      this._updateMarblePosition(movementX);
+    });
+
+    // 指针抬起或移动出游戏区域时，弹珠开始下落，并创建一下弹珠
+    const handleTouchEnd = () => {
+      masterPointerId = NaN;
+      this._fallMarble();
+      setTimeout(() => this.createMarble(), 1000);
+    };
+    this._gameArea.addEventListener("pointerup", (e) => {
+      const { pointerId = 1 } = e ?? {};
+      if (!this._currentMarble || masterPointerId !== pointerId) {
+        return;
+      }
+      handleTouchEnd();
+    });
+    this._gameArea.addEventListener("pointerleave", (e) => {
+      const { pointerId = 1 } = e ?? {};
+      if (!this._currentMarble || masterPointerId !== pointerId) {
+        return;
+      }
+      handleTouchEnd();
+    });
+  }
+
   /**
    * 初始化游戏。
    */
@@ -154,12 +225,19 @@ export class GameController {
     this._initRender(canvasDOM);
     this._initScene();
     this._bindCollision();
+    this._bindTouch();
   }
 
   createMarble() {
     const level = 0;
-    const marble = this._createStaticMarble(this._sceneWidth / 2, 40, level);
-    World.add(this._world, marble);
+    const positionX = this._sceneWidth / 2;
+    const marble = this._createStaticMarble(positionX, this._marblePositionY, level);
     this._currentMarble = marble;
+    this._marblePositionX = positionX;
+    this._marbleLevel = level;
+  }
+
+  start() {
+    this.createMarble();
   }
 }

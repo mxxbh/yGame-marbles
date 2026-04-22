@@ -1,15 +1,17 @@
 export const MARBLE_TYPES = [
   { size: 12, color: "#bbdefb", score: 1 },
-  { size: 17, color: "#feca57", score: 2 },
+  { size: 17, color: "#ffc832", score: 2 },
   { size: 22, color: "#48dbfb", score: 4 },
   { size: 28, color: "#ff9ff3", score: 8 },
   { size: 35, color: "#54a0ff", score: 16 },
   { size: 44, color: "#5f27cd", score: 32 },
   { size: 55, color: "#00d2d3", score: 64 },
   { size: 70, color: "#ff6b6b", score: 128 },
+  { size: 89, color: "#03c000", score: 256 },
 ];
 
 export const MARBLE_CIRCLE_CONFIG = {
+  isStatic: false,
   restitution: 0.5,
   friction: 0.4,
 };
