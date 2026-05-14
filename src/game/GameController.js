@@ -181,7 +181,7 @@ export class GameController {
 
             this._currentScore += score;
             this._dispatchScoreUpdateEvent();
-            playMergeSound(newLevel);
+            // playMergeSound(newLevel);
           }
         }, 10);
       }
@@ -193,7 +193,7 @@ export class GameController {
     World.remove(this._world, this._currentMarble);
     this._currentMarble = null;
     this._lastDropTime = Date.now();
-    playDropSound();
+    // playDropSound();
     this._createMarble(this._marblePositionX, this._marblePositionY, this._currentMarbleLevel);
   }
 
