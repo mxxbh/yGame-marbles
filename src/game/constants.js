@@ -1,13 +1,18 @@
 export const MARBLE_TYPES = [
-  { size: 12, color: "#bbdefb", score: 1 },
-  { size: 17, color: "#ffc832", score: 2 },
-  { size: 22, color: "#48dbfb", score: 4 },
-  { size: 28, color: "#ff9ff3", score: 8 },
-  { size: 35, color: "#54a0ff", score: 16 },
-  { size: 44, color: "#5f27cd", score: 32 },
-  { size: 55, color: "#00d2d3", score: 64 },
-  { size: 70, color: "#ff6b6b", score: 128 },
-  { size: 89, color: "#03c000", score: 256 },
+  { size: 12, color: "#b5d9f3", score: 1, shape: "circle" },
+  { size: 17, color: "#ebdf7a", score: 2, shape: "circle" },
+  { size: 22, color: "#80cbc4", score: 4, shape: "circle" },
+  { size: 28, color: "#f48fb1", score: 8, shape: "circle" },
+  { size: 35, color: "#42a5f5", score: 16, shape: "oval" },
+  { size: 44, color: "#ab47bc", score: 32, shape: "circle" },
+  { size: 55, color: "#26c6da", score: 64, shape: "circle" },
+  { size: 70, color: "#ff7043", score: 128, shape: "circle" },
+  { size: 89, color: "#66bb6a", score: 256, shape: "circle" },
+  { size: 110, color: "#ffa726", score: 512, shape: "circle" },
+  { size: 135, color: "#ec407a", score: 1024, shape: "circle" },
+  { size: 165, color: "#ffca28", score: 2048, shape: "circle" },
+  { size: 200, color: "#ef5350", score: 4096, shape: "circle" },
+  { size: 245, color: "#7e57c2", score: 8192, shape: "circle" },
 ];
 
 export const MARBLE_CIRCLE_CONFIG = {

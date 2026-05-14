@@ -2,13 +2,31 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <title>合成弹珠</title>
-    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="game-container">
-      <div id="game-area"></div>
+    <div id="game-area">
+      <div id="score">0</div>
+      <div id="next-marble">
+        <span>下一个</span>
+        <div id="next-preview"></div>
+      </div>
+      <div id="start-overlay" class="overlay">
+        <div class="overlay-content">
+          <h1>合成弹珠</h1>
+          <p>点击放入弹珠，争取获得最高分数</p>
+          <button id="start-btn">开始游戏</button>
+        </div>
+      </div>
+      <div id="game-over-overlay" class="overlay hidden">
+        <div class="overlay-content">
+          <h1>游戏结束</h1>
+          <p>得分: <span id="final-score">0</span></p>
+          <p id="high-score-text">最高: 0</p>
+          <button id="restart-btn">重新开始</button>
+        </div>
+      </div>
     </div>
 
     <script type="module" src="src/main.js"></script>
